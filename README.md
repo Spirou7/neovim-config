@@ -1,7 +1,6 @@
 # kickstart.nvim
 
 meow meow meow
-meow meow meow
 meow
 blah blah blah
 ## Introduction
