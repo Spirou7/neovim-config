@@ -1,8 +1,14 @@
 # kickstart.nvim
 
+meow meow meow
+meow meow meow
+meow
+blah blah blah
 ## Introduction
 
 A starting point for Neovim that is:
+
+bro what the fuck is happening
 
 * Small
 * Single-file
