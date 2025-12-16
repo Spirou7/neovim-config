@@ -89,6 +89,23 @@ vim.diagnostic.config {
   update_in_insert = false,
 }
 
+-- Custom highlight overrides (must run AFTER colorscheme loads)
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = '*',
+  callback = function()
+    -- Git sign colors (green=add, orange=change, red=delete)
+    vim.api.nvim_set_hl(0, 'GitSignsAdd', { fg = '#9ece6a' })
+    vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = '#ff9e64' })
+    vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#f7768e' })
+
+    -- Neo-tree git status colors (yellow for modified files/folders)
+    vim.api.nvim_set_hl(0, 'NeoTreeGitModified', { fg = '#e0af68' })
+    vim.api.nvim_set_hl(0, 'NeoTreeGitUnstaged', { fg = '#e0af68' })
+    vim.api.nvim_set_hl(0, 'NeoTreeGitUntracked', { fg = '#e0af68' })
+    vim.api.nvim_set_hl(0, 'NeoTreeGitDirty', { fg = '#e0af68' })
+  end,
+})
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -179,11 +196,11 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
+        add = { text = '┃' },
+        change = { text = '┃' },
+        delete = { text = '┃' },
+        topdelete = { text = '┃' },
+        changedelete = { text = '┃' },
       },
     },
   },
@@ -896,7 +913,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
