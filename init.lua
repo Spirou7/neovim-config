@@ -35,8 +35,8 @@ end)
 -- Enable break indent
 vim.opt.breakindent = true
 
--- Save undo history
-vim.opt.undofile = true
+-- Disable persistent undo (speeds up :wq)
+vim.opt.undofile = false
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -150,6 +150,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- Force-detach gitsigns before exit (prevents slow quit when git operations are running)
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  callback = function()
+    pcall(function() require('gitsigns').detach_all() end)
   end,
 })
 
@@ -949,6 +956,8 @@ require('lazy').setup({
 
 vim.cmd [[ cabbrev sg Telescope live_grep ]]
 vim.cmd [[ cabbrev sf Telescope find_files ]]
+vim.cmd [[ cabbrev gs Telescope git_status ]]
+vim.cmd [[ cabbrev gc Telescope git_commits ]]
 
 vim.lsp.set_log_level 'ERROR'
 
