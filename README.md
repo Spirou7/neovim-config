@@ -1,5 +1,6 @@
 # kickstart.nvim
 
+opened on remote 
 meow meow meow
 meow
 blah blah blah
