@@ -42,13 +42,32 @@ return {
       { "stevearc/dressing.nvim" }, -- optional: better UI
     },
     config = function()
-      local opts = {} -- check the "./lua/bookmarks/default-config.lua" file for all the options
-      require("bookmarks").setup(opts) -- you must call setup to init sqlite db
+      require("bookmarks").setup({}) -- you must call setup to init sqlite db
+
+      -- Custom keymap to open bookmarks with vertical layout (list on top, preview below)
+      vim.keymap.set("n", "<leader>bl", function()
+        local Service = require("bookmarks.domain.service")
+        local Sign = require("bookmarks.sign")
+        require("bookmarks.picker").pick_bookmark(function(bookmark)
+          if bookmark then
+            Service.goto_bookmark(bookmark.id)
+            Sign.safe_refresh_signs()
+          end
+        end, {
+          layout_strategy = "vertical",
+          layout_config = {
+            vertical = {
+              preview_cutoff = 0,
+              preview_height = 0.5,
+              mirror = true,
+            },
+          },
+        })
+      end, { desc = "List bookmarks" })
     end,
     keys = {
       { "<leader>b", nil, desc = "Bookmarks" },
       { "<leader>bm", "<cmd>BookmarksMark<cr>", desc = "Mark bookmark" },
-      { "<leader>bl", "<cmd>BookmarksGoto<cr>", desc = "List bookmarks" },
     },
   },
 

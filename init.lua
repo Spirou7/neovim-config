@@ -348,15 +348,20 @@ require('lazy').setup({
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
+        defaults = {
+          -- Vertical layout: list on top, preview on bottom
+          layout_strategy = 'vertical',
+          layout_config = {
+            vertical = {
+              preview_cutoff = 0, -- Always show preview
+              preview_height = 0.5, -- Preview takes 50% of window
+              mirror = true, -- Results on top, preview on bottom
+            },
+          },
+          mappings = {
+            i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
